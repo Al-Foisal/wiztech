@@ -22,13 +22,13 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ route('admin.login') }}" class="h1">
+                <a href="{{ route('doctor.login') }}" class="h1">
                 <img src="{{ asset($site->logo) }}" style="width:100%;">
                 </a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
-                <form action="{{ route('admin.storeForgotPassword') }}" method="post">
+                <form action="{{ route('doctor.storeForgotPassword') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email" name="email">
@@ -46,7 +46,7 @@
                     </div>
                 </form>
                 <p class="mt-3 mb-1">
-                    <a href="{{ route('admin.login') }}">Login</a>
+                    <a href="{{ route('doctor.login') }}">Login</a>
                 </p>
             </div>
             <!-- /.login-card-body -->

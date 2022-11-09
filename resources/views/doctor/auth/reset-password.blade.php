@@ -22,14 +22,14 @@
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="{{ route('admin.login') }}" class="h1">
+                <a href="{{ route('doctor.login') }}" class="h1">
                     <img src="{{ asset($site->logo) }}" style="width:100%;">
                 </a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">You are only one step a way from your new password, recover your password now.
                 </p>
-                <form action="{{ route('admin.storeResetPassword') }}" method="post">
+                <form action="{{ route('doctor.storeResetPassword') }}" method="post">
                     @csrf
                     <input type="hidden" name="token" value="{{ $request->token }}">
 
@@ -68,7 +68,7 @@
                 </form>
 
                 <p class="mt-3 mb-1">
-                    <a href="{{ route('admin.login') }}">Login</a>
+                    <a href="{{ route('doctor.login') }}">Login</a>
                 </p>
             </div>
             <!-- /.login-card-body -->

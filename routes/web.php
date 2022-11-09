@@ -7,8 +7,11 @@ use App\Http\Controllers\Backend\Auth\AdminResetPasswordController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DoctorManageController;
 use App\Http\Controllers\Backend\SiteInfoController;
+use App\Http\Controllers\Doctor\DoctorDashboardController;
+use App\Http\Controllers\Doctor\DoctorForgotPasswordController;
+use App\Http\Controllers\Doctor\DoctorLoginController;
+use App\Http\Controllers\Doctor\DoctorResetPasswordController;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,8 +21,26 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
+//doctor
+Route::prefix('/doctor')->as('doctor.')->middleware('guest:doctor')->group(function () {
+    Route::get('/login', [DoctorLoginController::class, 'login'])->name('login');
+    Route::post('/store-login', [DoctorLoginController::class, 'storeLogin'])->name('storeLogin');
+
+    Route::get('/forgot-password', [DoctorForgotPasswordController::class, 'forgotPassword'])->name('forgotPassword');
+    Route::post('/forgot-password', [DoctorForgotPasswordController::class, 'storeForgotPassword'])->name('storeForgotPassword');
+
+    Route::get('/reset-password/{token}', [DoctorResetPasswordController::class, 'resetPassword'])->name('resetPassword');
+    Route::post('/reset-password', [DoctorResetPasswordController::class, 'storeForgotPassword'])->name('storeResetPassword');
+});
+
+Route::prefix('/doctor')->as('doctor.')->middleware('auth:doctor')->group(function () {
+    Route::post('/logout', [DoctorLoginController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DoctorDashboardController::class, 'dashboard'])->name('dashboard');
+});
+
+//admin
 Route::prefix('/admin')->as('admin.')->middleware('guest:admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('/store-login', [AdminLoginController::class, 'storeLogin'])->name('storeLogin');
@@ -48,15 +69,15 @@ Route::prefix('/admin')->as('admin.')->middleware('auth:admin')->group(function 
 
     });
 
-    Route::controller(DoctorManageController::class)->prefix('/manage-doctor')->as('manage_doctor.')->group(function(){
-        Route::get('/','index')->name('index');
-        Route::get('/create','create')->name('create');
-        Route::post('/store','store')->name('store');
-        Route::get('/edit/{doctor}','edit')->name('edit');
-        Route::put('/update/{doctor}','update')->name('update');
-        Route::delete('/delete/{doctor}','delete')->name('delete');
-        Route::post('/active/{doctor}','active')->name('active');
-        Route::post('/inactive/{doctor}','inactive')->name('inactive');
+    Route::controller(DoctorManageController::class)->prefix('/manage-doctor')->as('manage_doctor.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{doctor}', 'edit')->name('edit');
+        Route::put('/update/{doctor}', 'update')->name('update');
+        Route::delete('/delete/{doctor}', 'delete')->name('delete');
+        Route::post('/active/{doctor}', 'active')->name('active');
+        Route::post('/inactive/{doctor}', 'inactive')->name('inactive');
     });
 
     //site settings

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Auth;
+namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class AdminLoginController extends Controller {
+class DoctorLoginController extends Controller
+{
     public function login() {
-        return view('backend.auth.login');
+        return view('doctor.auth.login');
     }
 
     public function storeLogin(Request $request) {
@@ -22,19 +23,18 @@ class AdminLoginController extends Controller {
             return back()->with('toast_error', $validator->messages()->all())->withInput();
         }
 
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1])) {
-            return redirect()->route('admin.dashboard');
+        if (Auth::guard('doctor')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1])) {
+            return redirect()->route('doctor.dashboard');
         }
 
-        return redirect()->route('admin.login')->withToastError('Invalid Credentitials!!');
+        return redirect()->route('doctor.login')->withToastError('Invalid Credentitials!!');
 
     }
 
     public function logout(Request $request) {
-        Auth::guard('admin')->logout();
+        Auth::guard('doctor')->logout();
 
-        return redirect()->route('admin.login')
+        return redirect()->route('doctor.login')
             ->withToastSuccess('Logout Successful!!');
     }
-
 }

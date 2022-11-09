@@ -22,8 +22,12 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
+            if (Auth::guard($guard)->check() && $guard === 'web') {
                 return redirect(RouteServiceProvider::HOME);
+            } else if (Auth::guard($guard)->check() && $guard === 'admin'){
+                return redirect()->route('admin.dashboard');
+            } else if(Auth::guard($guard)->check() && $guard === 'doctor'){
+                return redirect()->route('doctor.dashboard');
             }
         }
 

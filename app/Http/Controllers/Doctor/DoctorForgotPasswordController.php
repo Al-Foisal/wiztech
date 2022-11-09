@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Auth;
+namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
-use App\Mail\AdminResetPasswordLink;
 use App\Mail\ResetPasswordLink;
-use App\Models\Admin;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
-class AdminForgotPasswordController extends Controller
+class DoctorForgotPasswordController extends Controller
 {
     public function forgotPassword() {
-        return view('backend.auth.forgot-password');
+        return view('doctor.auth.forgot-password');
     }
 
     public function storeForgotPassword(Request $request) {
@@ -26,13 +25,13 @@ class AdminForgotPasswordController extends Controller
             return back()->with('toast_error', $validator->messages()->all())->withInput();
         }
 
-        $admin = Admin::where('email', $request->email)->first();
+        $doctor = Doctor::where('email', $request->email)->first();
 
-        if (!$admin) {
+        if (!$doctor) {
             return redirect()->back()->withToastError('This email is no longer with our records!!');
         }
 
-        $url = route('admin.resetPassword', [$request->_token, 'email' => $request->email]);
+        $url = route('doctor.resetPassword', [$request->_token, 'email' => $request->email]);
 
         Mail::to($request->email)->send(new ResetPasswordLink($url));
 
@@ -42,6 +41,6 @@ class AdminForgotPasswordController extends Controller
             'created_at' => now(),
         ]);
 
-        return redirect()->back()->withToastSuccess('We have sent a fresh reset password link!!');
+        return redirect()->back()->withToastSuccess('We have sent a fresh reset password link to your email!!');
     }
 }
