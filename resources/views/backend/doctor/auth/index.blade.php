@@ -27,7 +27,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>Action</th>
@@ -38,6 +38,8 @@
                                         <th>Speciality</th>
                                         <th>Available From</th>
                                         <th>Available To</th>
+                                        <th>Tea Party From</th>
+                                        <th>Tea Party To</th>
                                         <th>Status</th>
                                         <th>Image</th>
                                     </tr>
@@ -89,6 +91,8 @@
                                             <td>{{ $doctor->speciality }}</td>
                                             <td>{{ date('h:i A', strtotime($doctor->available_from)) }}</td>
                                             <td>{{ date('h:i A', strtotime($doctor->available_to)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($doctor->tea_party_from)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($doctor->tea_party_to)) }}</td>
                                             <td>{{ $doctor->status == 1 ? 'Active' : 'Inactive' }}</td>
                                             <td><img src="{{ asset($doctor->image) }}" height="50" width="50"
                                                     alt=""></td>
@@ -96,6 +100,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {!! $doctors->links() !!}
                         </div>
                         <!-- /.card-body -->
                     </div>

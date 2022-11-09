@@ -21,6 +21,8 @@ class CreateDoctorsTable extends Migration {
             $table->text('speciality');
             $table->time('available_from');
             $table->time('available_to');
+            $table->time('tea_party_from');
+            $table->time('tea_party_to');
             $table->string('image');
             $table->tinyInteger('status');
             $table->timestamp('email_verified_at')->nullable();

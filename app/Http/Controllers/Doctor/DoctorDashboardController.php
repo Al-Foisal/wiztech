@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Booking;
+use App\Models\Doctor;
 
-class DoctorDashboardController extends Controller
-{
+class DoctorDashboardController extends Controller {
     public function dashboard() {
-        $data                        = [];
+        $data                    = [];
+        $data['checked_patient']   = Booking::where('doctor_id', auth()->guard('doctor')->user()->id)->where('isCheck', 1)->count();
+        $data['unchecked_patient'] = Booking::where('doctor_id', auth()->guard('doctor')->user()->id)->where('isCheck', 0)->count();
 
         return view('doctor.dashboard', $data);
+    }
+
+    public function teaParty() {
+        $doctors = Doctor::where('status', 1)->select(['name', 'tea_party_from', 'tea_party_to', 'image'])->get();
+
+        return view('doctor.tea-slot', compact('doctors'));
     }
 }

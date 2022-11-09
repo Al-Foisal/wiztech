@@ -19,5 +19,31 @@
         </div><!-- /.container-fluid -->
     </section>
 
-    {{ auth()->user()->email }}
+    <section class="content">
+        <div class="container-fluid">
+            <h4>Patient status</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ $doctor }}</h3>
+
+                            <p>Total Doctor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- small card -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3>{{ $user }}</h3>
+
+                            <p>Total User</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

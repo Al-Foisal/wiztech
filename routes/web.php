@@ -7,19 +7,26 @@ use App\Http\Controllers\Backend\Auth\AdminResetPasswordController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\DoctorManageController;
 use App\Http\Controllers\Backend\SiteInfoController;
+use App\Http\Controllers\Doctor\DoctorBookingController;
 use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorForgotPasswordController;
 use App\Http\Controllers\Doctor\DoctorLoginController;
 use App\Http\Controllers\Doctor\DoctorResetPasswordController;
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::controller(FrontendController::class)->group(function () {
+    Route::get('/', 'doctorList')->name('doctorList');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    Route::middleware('auth')->group(function () {
+        Route::get('/booking/{doctor}', 'booking')->name('booking');
+        Route::post('/doctor-booking', 'doctorBooking')->name('doctorBooking');
+        Route::get('/dashboard', 'dashboard')->name('dashboard');
+    });
+});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
@@ -38,6 +45,11 @@ Route::prefix('/doctor')->as('doctor.')->middleware('guest:doctor')->group(funct
 Route::prefix('/doctor')->as('doctor.')->middleware('auth:doctor')->group(function () {
     Route::post('/logout', [DoctorLoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DoctorDashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/tea-party', [DoctorDashboardController::class, 'teaParty'])->name('teaParty');
+
+    Route::get('/doctor-booking', [DoctorBookingController::class, 'doctorBooking'])->name('doctorBooking');
+
+    Route::post('/is-patient-checked/{booking}', [DoctorBookingController::class, 'isPatientChecked'])->name('isPatientChecked');
 });
 
 //admin

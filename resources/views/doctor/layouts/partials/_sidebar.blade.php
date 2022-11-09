@@ -33,7 +33,18 @@
                     </a>
                 </li>
 
-                
+                <li class="nav-item">
+                    <a href="{{ route('doctor.doctorBooking') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Patient List</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('doctor.teaParty') }}" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p>Tea Slot</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

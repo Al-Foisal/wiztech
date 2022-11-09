@@ -25,10 +25,12 @@ class DoctorManageController extends Controller {
             'email'          => 'required|unique:doctors',
             'password'       => 'required|min:8',
             'phone'          => 'required',
-            'education'       => 'required',
+            'education'      => 'required',
             'speciality'     => 'required',
             'available_from' => 'required',
             'available_to'   => 'required',
+            'tea_party_from' => 'required',
+            'tea_party_to'   => 'required',
             'image'          => 'required|image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
@@ -63,6 +65,8 @@ class DoctorManageController extends Controller {
         $category->speciality     = $request->speciality;
         $category->available_from = $request->available_from;
         $category->available_to   = $request->available_to;
+        $category->tea_party_from = $request->tea_party_from;
+        $category->tea_party_to   = $request->tea_party_to;
         $category->image          = $final_name1;
         $category->status         = 1;
         $category->save();
@@ -82,10 +86,12 @@ class DoctorManageController extends Controller {
             'email'          => 'required|unique:doctors,email,' . $doctor->id,
             'password'       => 'nullable|min:8',
             'phone'          => 'required',
-            'education'       => 'required',
+            'education'      => 'required',
             'speciality'     => 'required',
             'available_from' => 'required',
             'available_to'   => 'required',
+            'tea_party_from' => 'required',
+            'tea_party_to'   => 'required',
             'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
@@ -133,6 +139,8 @@ class DoctorManageController extends Controller {
             'speciality'     => $request->speciality,
             'available_from' => $request->available_from,
             'available_to'   => $request->available_to,
+            'tea_party_from' => $request->tea_party_from,
+            'tea_party_to'   => $request->tea_party_to,
         ]);
 
         return redirect()->route('admin.manage_doctor.index')->withToastSuccess('Doctor updated successfully!!');

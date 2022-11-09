@@ -59,6 +59,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="">Tea Party From</label>
+                            <div class="input-group mb-3">
+                                <input type="time" class="form-control"  name="tea_party_from"  value="{{ old('tea_party_from') }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">Tea Party To</label>
+                            <div class="input-group mb-3">
+                                <input type="time" class="form-control"  name="tea_party_to" value="{{ old('tea_party_to') }}">
+                            </div>
+                        </div>
+                    </div>
                     <div class="input-group mb-3">
                         <textarea type="text" class="form-control" placeholder="Education" name="education" value="{{ old('education') }}"></textarea>
                     </div>
