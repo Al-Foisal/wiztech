@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\SiteInfo;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //website settings
+        $site = SiteInfo::find(1);
+        view()->share(['site' => $site]);
     }
 }
