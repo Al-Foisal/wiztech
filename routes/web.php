@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\Auth\AdminLoginController;
 use App\Http\Controllers\Backend\Auth\AdminRegistrationController;
 use App\Http\Controllers\Backend\Auth\AdminResetPasswordController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\DoctorManageController;
 use App\Http\Controllers\Backend\SiteInfoController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,17 @@ Route::prefix('/admin')->as('admin.')->middleware('auth:admin')->group(function 
         Route::post('/admin/inactive-admin/{admin}', 'inactiveAdmin')->name('inactiveAdmin');
         Route::delete('/delete-admin/{admin}', 'deleteAdmin')->name('deleteAdmin');
 
+    });
+
+    Route::controller(DoctorManageController::class)->prefix('/manage-doctor')->as('manage_doctor.')->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('/create','create')->name('create');
+        Route::post('/store','store')->name('store');
+        Route::get('/edit/{doctor}','edit')->name('edit');
+        Route::put('/update/{doctor}','update')->name('update');
+        Route::delete('/delete/{doctor}','delete')->name('delete');
+        Route::post('/active/{doctor}','active')->name('active');
+        Route::post('/inactive/{doctor}','inactive')->name('inactive');
     });
 
     //site settings

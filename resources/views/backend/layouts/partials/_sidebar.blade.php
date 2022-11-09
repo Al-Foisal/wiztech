@@ -58,6 +58,31 @@
                     </ul>
                 </li>
 
+                {{-- doctor --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-circle text-warning"></i>
+                        <p class="text">
+                            Doctor
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview nav-header">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.manage_doctor.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Doctor List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.manage_doctor.create') }}" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p>Create New Doctor</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- site info --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">

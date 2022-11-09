@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title', 'Instructor List')
+@section('title', 'Doctor List')
 
 @section('backend')
     <!-- Content Header (Page header) -->
@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Instructor</h1>
+                    <h1>Doctor List</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Instructor List</li>
+                        <li class="breadcrumb-item active">Doctor</li>
                     </ol>
                 </div>
             </div>
@@ -31,17 +31,19 @@
                                 <thead>
                                     <tr>
                                         <th>Action</th>
-                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
-                                        <th>Approved?</th>
-                                        <th>Courses?</th>
-                                        <th>Created_at</th>
+                                        <th>Education</th>
+                                        <th>Speciality</th>
+                                        <th>Available From</th>
+                                        <th>Available To</th>
+                                        <th>Status</th>
+                                        <th>Image</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($instructors as $key => $instructor)
+                                    @foreach ($doctors as $key => $doctor)
                                         <tr>
                                             <td>
                                                 <!-- Example single danger button -->
@@ -51,26 +53,26 @@
                                                         Action
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        @if ($instructor->is_approved === 0)
+                                                        @if ($doctor->status == 0)
                                                             <form
-                                                                action="{{ route('admin.activeInstructor', $instructor) }}"
+                                                                action="{{ route('admin.manage_doctor.active', $doctor) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 <button class="dropdown-item" type="submit">Active
-                                                                    Instructor</button>
+                                                                    Doctor</button>
                                                             </form>
                                                         @else
                                                             <form
-                                                                action="{{ route('admin.inactiveInstructor', $instructor) }}"
+                                                                action="{{ route('admin.manage_doctor.inactive', $doctor) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 <button class="dropdown-item" type="submit">Inactive
-                                                                    Instructor</button>
+                                                                    Doctor</button>
                                                             </form>
                                                         @endif
-                                                        {{-- <a class="dropdown-item"
-                                                            href="{{ route('admin.editAdmin', $admin) }}">Edit</a>
-                                                         <form action="{{ route('admin.deleteAdmin', $admin) }}"
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.manage_doctor.edit', $doctor) }}">Edit</a>
+                                                        {{-- <form action="{{ route('doctor.deletedoctor', $doctor) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('delete')
@@ -80,23 +82,20 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><img src="{{ asset($instructor->image ?? '') }}" height="50" width="50"
+                                            <td>{{ $doctor->name }}</td>
+                                            <td>{{ $doctor->email }}</td>
+                                            <td>{{ $doctor->phone }}</td>
+                                            <td>{{ $doctor->education }}</td>
+                                            <td>{{ $doctor->speciality }}</td>
+                                            <td>{{ date('h:i A', strtotime($doctor->available_from)) }}</td>
+                                            <td>{{ date('h:i A', strtotime($doctor->available_to)) }}</td>
+                                            <td>{{ $doctor->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                            <td><img src="{{ asset($doctor->image) }}" height="50" width="50"
                                                     alt=""></td>
-                                            <td>{{ $instructor->name }}</td>
-                                            <td>{{ $instructor->email }}</td>
-                                            <td>{{ $instructor->phone }}</td>
-                                            <td>{{ $instructor->is_approved === 1 ? 'Y' : 'N' }}</td>
-                                            <td>
-                                                Active: {{ getActiveCourseByInstructorId($instructor->id) }}
-                                                <hr>
-                                                Inactive: {{ getInactiveCourseByInstructorId($instructor->id) }}
-                                            </td>
-                                            <td>{{ $instructor->created_at->diffForHumans() }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $instructors->links() }}
                         </div>
                         <!-- /.card-body -->
                     </div>
